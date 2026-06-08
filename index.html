@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alur Penyusunan APB Desa - Permendagri 20/2018</title>
+<style>
+:root {
+  --primary: #198754;
+  --primary-dark: #146c43;
+  --primary-light: #d1e7dd;
+  --bg: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text: #212529;
+  --text-secondary: #6c757d;
+  --border: #dee2e6;
+  --card-bg: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --success: #198754;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --info: #0dcaf0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #20c997;
+    --primary-dark: #198754;
+    --primary-light: #0f5132;
+    --bg: #121212;
+    --bg-secondary: #1e1e1e;
+    --text: #e9ecef;
+    --text-secondary: #adb5bd;
+    --border: #343a40;
+    --card-bg: #1e1e1e;
+    --shadow: rgba(0, 0, 0, 0.3);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 12px var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.header p {
+  font-size: 0.9rem;
+  opacity: 0.95;
+  margin-top: 0.25rem;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+}
+
+.btn-back:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.main {
+  padding: 2rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-light);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.card p, .card li {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card li::before {
+  content: "✓ ";
+  color: var(--primary);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  margin: 2.5rem 0 1.5rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-title::before {
+  content: "";
+  width: 4px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border-radius: 2px;
+}
+
+.timeline-controls {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary-light);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1rem;
+  background: var(--card-bg);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.timeline-item:hover {
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.75rem;
+  top: 1.5rem;
+  width: 16px;
+  height: 16px;
+  background: var(--primary);
+  border: 3px solid var(--bg);
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.timeline-header {
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+}
+
+.timeline-header:hover {
+  background: var(--bg-secondary);
+}
+
+.timeline-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.timeline-badge {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.timeline-name {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.timeline-toggle {
+  transition: transform 0.3s;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.timeline-item.active .timeline-toggle {
+  transform: rotate(180deg);
+}
+
+.timeline-content {
+  padding: 0 1.5rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.timeline-item.active .timeline-content {
+  padding: 0 1.5rem 1.25rem;
+  max-height: 500px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  font-size: 0.95rem;
+}
+
+thead {
+  background: var(--primary);
+  color: white;
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td {
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.bidang-row {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bidang-row:hover {
+  background: var(--bg-secondary);
+}
+
+.bidang-cell {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.bidang-toggle {
+  transition: transform 0.3s;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.bidang-row.active .bidang-toggle {
+  transform: rotate(180deg);
+}
+
+.sub-bidang {
+  display: none;
+  background: var(--bg-secondary);
+}
+
+.sub-bidang.active {
+  display: table-row;
+}
+
+.sub-bidang td {
+  padding: 1rem 1rem 1rem 3rem;
+  color: var(--text-secondary);
+}
+
+.sub-bidang ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sub-bidang li {
+  padding: 0.4rem 0;
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.sub-bidang li::before {
+  content: "→";
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  padding: 2rem 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.footer-section h4 {
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.footer-section p, .footer-section li {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-note {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.badge-warning {
+  display: inline-block;
+  background: #fff3cd;
+  color: #664d03;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  border-left: 4px solid var(--warning);
+  margin-top: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge-warning {
+    background: #332701;
+    color: #ffda6a;
+  }
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .timeline {
+    padding-left: 1.5rem;
+  }
+  
+  .timeline-item::before {
+    left: -1.25rem;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .timeline-header {
+    padding: 1rem;
+  }
+  
+  .timeline-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .sub-bidang td {
+    padding-left: 1.5rem;
+  }
+  
+  th, .bidang-cell {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.timeline-item {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
+.timeline-item:nth-child(7) { animation-delay: 0.7s; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <div>
+        <h1>Alur Penyusunan APB Desa</h1>
+        <p>Berdasarkan Permendagri No. 20 Tahun 2018 & Permendesa PDTT No. 21 Tahun 2020</p>
+      </div>
+      <a href="https://tppkecamatanbarambai.blogspot.com/p/dasboard-progres-pendampingan.html?m=1" class="btn-back">
+        <span>←</span>
+        <span>Kembali ke Dashboard</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📅</div>
+          <h3>Waktu Penyusunan</h3>
+        </div>
+        <ul>
+          <li>Dimulai: Bulan Oktober tahun berjalan</li>
+          <li>Penetapan: Paling lambat 31 Desember</li>
+          <li>Pelaksanaan: 1 Januari - 31 Desember tahun anggaran</li>
+          <li>Sumber: RPJM Desa & RKP Desa yang telah ditetapkan</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📚</div>
+          <h3>Dasar Hukum APB Desa</h3>
+        </div>
+        <ul>
+          <li>Permendagri No. 20/2018 tentang Pengelolaan Keuangan Desa</li>
+          <li>Permendesa PDTT No. 21/2020 Pasal 36-40</li>
+          <li>Perda/Perbup Pedoman Penyusunan APB Desa</li>
+          <li>Perdes RKP Desa dan RPJM Desa</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">Tahapan Penyusunan APB Desa</h2>
+    
+    <div class="timeline-controls">
+      <button class="btn btn-primary" id="btn-expand">
+        <span>Buka Semua</span>
+      </button>
+      <button class="btn btn-outline" id="btn-collapse">
+        <span>Tutup Semua</span>
+      </button>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">Oktober</span>
+            <span class="timeline-name">1. Penyusunan Rancangan APB Desa oleh Kepala Desa</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>Sekretaris Desa menyusun Rancangan Peraturan Desa tentang APB Desa berdasarkan RKP Desa tahun berkenaan. Rancangan disampaikan Kepala Desa kepada BPD untuk dibahas dan disepakati bersama.</p>
+          <div class="badge-warning">
+            <strong>Dasar:</strong> Permendagri 20/2018 Pasal 31 - RKP Desa menjadi dasar penyusunan APB Desa
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">Minggu I Nov</span>
+            <span class="timeline-name">2. Penyampaian Raperdes APB Desa ke BPD</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>Kepala Desa menyampaikan Rancangan Peraturan Desa tentang APB Desa kepada BPD untuk dibahas dan disepakati bersama dalam musyawarah BPD. Dokumen disampaikan paling lambat minggu pertama bulan November.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">Minggu II-III Nov</span>
+            <span class="timeline-name">3. Musyawarah BPD Pembahasan Raperdes APB Desa</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>BPD menyelenggarakan musyawarah untuk membahas Raperdes APB Desa. Pembahasan dilakukan bersama Kepala Desa dan perangkat desa. Hasil kesepakatan dituangkan dalam Berita Acara.</p>
+          <div class="badge-warning">
+            <strong>Ketentuan:</strong> Kesepakatan bersama paling lambat minggu ketiga November
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">Minggu IV Nov</span>
+            <span class="timeline-name">4. Evaluasi Raperdes APB Desa oleh Camat/Bupati</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>Raperdes APB Desa yang telah disepakati disampaikan kepada Bupati/Walikota melalui Camat paling lambat 3 hari sejak disepakati untuk dievaluasi. Bupati menetapkan hasil evaluasi paling lama 20 hari kerja.</p>
+          <div class="badge-warning">
+            <strong>Dasar:</strong> Permendagri 20/2018 Pasal 34 - Evaluasi untuk sinkronisasi kebijakan dan prioritas
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">Awal Desember</span>
+            <span class="timeline-name">5. Penyempurnaan Raperdes APB Desa</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>Kepala Desa bersama BPD melakukan penyempurnaan Raperdes APB Desa berdasarkan hasil evaluasi. Penyempurnaan dilakukan paling lama 7 hari kerja sejak hasil evaluasi diterima. Jika tidak ditindaklanjuti, diberlakukan auto-approval.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">≤ 31 Desember</span>
+            <span class="timeline-name">6. Penetapan Perdes APB Desa</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>Kepala Desa menetapkan Raperdes APB Desa menjadi Peraturan Desa tentang APB Desa paling lambat tanggal 31 Desember tahun berjalan setelah mendapat persetujuan BPD dan hasil evaluasi Bupati.</p>
+          <div class="badge-warning">
+            <strong>Penting:</strong> Keterlambatan penetapan APB Desa berakibat pada sanksi penundaan penyaluran Dana Desa
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-title">
+            <span class="timeline-badge">Januari</span>
+            <span class="timeline-name">7. Sosialisasi & Pelaksanaan APB Desa</span>
+          </div>
+          <span class="timeline-toggle">▼</span>
+        </div>
+        <div class="timeline-content">
+          <p>Pemerintah Desa wajib menginformasikan substansi Perdes APB Desa kepada masyarakat. Pelaksanaan APB Desa dimulai tanggal 1 Januari dan berakhir 31 Desember tahun anggaran berjalan.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Struktur 5 Bidang Belanja APB Desa</h2>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th width="5%">No</th>
+            <th>Bidang Belanja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bidang-row" data-target="bidang-1">
+            <td style="padding: 1rem;">1</td>
+            <td class="bidang-cell">
+              <span>Bidang Penyelenggaraan Pemerintahan Desa</span>
+              <span class="bidang-toggle">▼</span>
+            </td>
+          </tr>
+          <tr class="sub-bidang" id="bidang-1">
+            <td colspan="2">
+              <ul>
+                <li>Penyelenggaraan Belanja Siltap, Tunjangan dan Operasional Perangkat Desa</li>
+                <li>Sarana dan Prasarana Pemerintahan Desa</li>
+                <li>Administrasi Kependudukan, Pencatatan Sipil, Statistik dan Kearsipan</li>
+                <li>Tata Praja Pemerintahan, Perencanaan, Keuangan dan Pelaporan</li>
+                <li>Pertanahan</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr class="bidang-row" data-target="bidang-2">
+            <td style="padding: 1rem;">2</td>
+            <td class="bidang-cell">
+              <span>Bidang Pelaksanaan Pembangunan Desa</span>
+              <span class="bidang-toggle">▼</span>
+            </td>
+          </tr>
+          <tr class="sub-bidang" id="bidang-2">
+            <td colspan="2">
+              <ul>
+                <li>Pembangunan, Pemanfaatan dan Pemeliharaan Infrastruktur dan Lingkungan Desa</li>
+                <li>Pembangunan, Pemanfaatan dan Pemeliharaan Sarana dan Prasarana Kesehatan</li>
+                <li>Pembangunan, Pemanfaatan dan Pemeliharaan Sarana dan Prasarana Pendidikan dan Kebudayaan</li>
+                <li>Pengembangan Usaha Ekonomi Produktif serta Pembangunan Sarana Prasarana Ekonomi Desa</li>
+                <li>Pelestarian Lingkungan Hidup</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr class="bidang-row" data-target="bidang-3">
+            <td style="padding: 1rem;">3</td>
+            <td class="bidang-cell">
+              <span>Bidang Pembinaan Kemasyarakatan</span>
+              <span class="bidang-toggle">▼</span>
+            </td>
+          </tr>
+          <tr class="sub-bidang" id="bidang-3">
+            <td colspan="2">
+              <ul>
+                <li>Pembinaan Lembaga Kemasyarakatan</li>
+                <li>Penyelenggaraan Ketentraman, Ketertiban dan Pelindungan Masyarakat</li>
+                <li>Pembinaan Kerukunan Umat Beragama</li>
+                <li>Pengadaan, Pembangunan, Pemanfaatan dan Pemeliharaan Sarana Prasarana Kelembagaan</li>
+                <li>Pembinaan Lembaga Adat, Budaya dan Keagamaan</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr class="bidang-row" data-target="bidang-4">
+            <td style="padding: 1rem;">4</td>
+            <td class="bidang-cell">
+              <span>Bidang Pemberdayaan Masyarakat</span>
+              <span class="bidang-toggle">▼</span>
+            </td>
+          </tr>
+          <tr class="sub-bidang" id="bidang-4">
+            <td colspan="2">
+              <ul>
+                <li>Peningkatan Kapasitas Perangkat Desa dan Lembaga Desa</li>
+                <li>Peningkatan Kapasitas Kelompok Usaha Ekonomi Produktif</li>
+                <li>Pelatihan dan Penyuluhan Pemberdayaan Perempuan dan Anak</li>
+                <li>Fasilitasi Sertifikasi Produk dan Peningkatan Kualitas SDM</li>
+                <li>Penguatan Ketahanan Pangan dan Pencegahan Stunting</li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr class="bidang-row" data-target="bidang-5">
+            <td style="padding: 1rem;">5</td>
+            <td class="bidang-cell">
+              <span>Bidang Penanggulangan Bencana, Darurat & Mendesak</span>
+              <span class="bidang-toggle">▼</span>
+            </td>
+          </tr>
+          <tr class="sub-bidang" id="bidang-5">
+            <td colspan="2">
+              <ul>
+                <li>Kegiatan Penanggulangan Bencana Alam dan Non-Alam</li>
+                <li>Kegiatan Penanggulangan Keadaan Darurat</li>
+                <li>Kegiatan Keadaan Mendesak Desa</li>
+                <li>Bantuan Langsung Tunai Dana Desa (BLT-DD)</li>
+                <li>Pemulihan Pasca Bencana dan Situasi Darurat Lainnya</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Catatan Penting</h4>
+        <p>APB Desa disusun berdasarkan prinsip transparansi, akuntabilitas, partisipatif serta dilakukan dengan tertib dan disiplin anggaran.</p>
+        <p>Seluruh dokumen perencanaan dan penganggaran wajib diinformasikan kepada masyarakat melalui media informasi desa.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Referensi Regulasi</h4>
+        <ul>
+          <li>UU No. 6 Tahun 2014 tentang Desa</li>
+          <li>PP No. 43 Tahun 2014 jo. PP 47/2015</li>
+          <li>Permendagri No. 20 Tahun 2018</li>
+          <li>Permendesa PDTT No. 21 Tahun 2020</li>
+          <li>Peraturan Bupati setempat</li>
+        </ul>
+      </div>
+    <div class="footer-note">
+      © 2025 Dokumen Alur Penyusunan APB Desa | Untuk keperluan transparansi dan akuntabilitas pengelolaan keuangan desa
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Timeline Toggle
+  const timelineHeaders = document.querySelectorAll('.timeline-header');
+  timelineHeaders.forEach(header => {
+    header.addEventListener('click', function() {
+      const item = this.parentElement;
+      item.classList.toggle('active');
+    });
+  });
+
+  // Expand All / Collapse All
+  const btnExpand = document.getElementById('btn-expand');
+  const btnCollapse = document.getElementById('btn-collapse');
+  const timelineItems = document.querySelectorAll('.timeline-item');
+
+  btnExpand.addEventListener('click', function() {
+    timelineItems.forEach(item => item.classList.add('active'));
+  });
+
+  btnCollapse.addEventListener('click', function() {
+    timelineItems.forEach(item => item.classList.remove('active'));
+  });
+
+  // Bidang Table Toggle
+  const bidangRows = document.querySelectorAll('.bidang-row');
+  bidangRows.forEach(row => {
+    row.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      const subBidang = document.getElementById(targetId);
+      
+      this.classList.toggle('active');
+      subBidang.classList.toggle('active');
+    });
+  });
+});
+</script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>
